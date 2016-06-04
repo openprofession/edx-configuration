@@ -137,7 +137,7 @@
 
 - name: set git fetch.prune to ignore deleted remote refs
   shell: git config --global fetch.prune true
-  sudo_user: "{{ edx_service_user }}"
+  become_user: "{{ edx_service_user }}"
   when: edx_service_repos is defined
   tags:
     - install
@@ -167,7 +167,7 @@
     repo=git@{{ item.DOMAIN }}:{{ item.PATH }}/{{ item.REPO }}
     dest={{ item.DESTINATION }}  version={{ item.VERSION }}
     accept_hostkey=yes key_file={{ edx_service_home }}/.ssh/{{ item.REPO }}
-  sudo_user: "{{ edx_service_user }}"
+  become_user: "{{ edx_service_user }}"
   register: code_checkout
   when: item.PROTOCOL == "ssh" and edx_service_repos is defined
   with_items: edx_service_repos
@@ -179,7 +179,7 @@
   git: >
     repo=https://{{ item.DOMAIN }}/{{ item.PATH }}/{{ item.REPO }}
     dest={{ item.DESTINATION }}  version={{ item.VERSION }}
-  sudo_user: "{{ edx_service_user }}"
+  become_user: "{{ edx_service_user }}"
   register: code_checkout
   when: item.PROTOCOL == "https" and edx_service_repos is defined
   with_items: edx_service_repos

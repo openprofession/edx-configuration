@@ -103,5 +103,5 @@
   # the results
 - name: restart rsyslogd
   service: name=rsyslog state=restarted
-  sudo: True
+  become: True
   when: config_templates.changed

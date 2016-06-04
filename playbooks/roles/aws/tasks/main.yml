@@ -158,5 +158,5 @@
 
 - name: restart ssh
   service: name=ssh state=restarted
-  sudo: True
+  become: True
   when: sshd_config.changed

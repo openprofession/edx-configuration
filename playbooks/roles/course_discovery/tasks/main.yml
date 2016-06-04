@@ -25,7 +25,7 @@
   template:
     src: edx/app/course_discovery/course_discovery_gunicorn.py.j2
     dest: "{{ course_discovery_home }}/course_discovery_gunicorn.py"
-  sudo_user: "{{ course_discovery_user }}"
+  become_user: "{{ course_discovery_user }}"
   tags:
     - install
     - install:configuration
@@ -50,7 +50,7 @@
   command: "virtualenv --python=python3.5 {{ course_discovery_venv_dir }}"
   args:
     creates: "{{ course_discovery_venv_dir }}/bin/pip"
-  sudo_user: "{{ course_discovery_user }}"
+  become_user: "{{ course_discovery_user }}"
   tags:
     - install
     - install:system-requirements
@@ -59,7 +59,7 @@
   command: make requirements
   args:
     chdir: "{{ course_discovery_code_dir }}"
-  sudo_user: "{{ course_discovery_user }}"
+  become_user: "{{ course_discovery_user }}"
   environment: "{{ course_discovery_environment }}"
   tags:
     - install
@@ -69,7 +69,7 @@
   command: make local-requirements
   args:
     chdir: "{{ course_discovery_code_dir }}"
-  sudo_user: "{{ course_discovery_user }}"
+  become_user: "{{ course_discovery_user }}"
   environment: "{{ course_discovery_environment }}"
   tags:
     - devstack
@@ -118,7 +118,7 @@
   command: make migrate
   args:
     chdir: "{{ course_discovery_code_dir }}"
-  sudo_user: "{{ course_discovery_user }}"
+  become_user: "{{ course_discovery_user }}"
   environment: "{{ course_discovery_migration_environment }}"
   when: migrate_db is defined and migrate_db|lower == "yes"
   tags:
@@ -217,7 +217,7 @@
   command: make static
   args:
     chdir: "{{ course_discovery_code_dir }}"
-  sudo_user: "{{ course_discovery_user }}"
+  become_user: "{{ course_discovery_user }}"
   environment: "{{ course_discovery_environment }}"
   tags:
     - assets
@@ -230,7 +230,7 @@
     config: "{{ supervisor_cfg }}"
     name: "{{ course_discovery_service_name }}"
   when: not disable_edx_services
-  sudo_user: "{{ supervisor_service_user }}"
+  become_user: "{{ supervisor_service_user }}"
   tags:
     - manage
     - manage:start

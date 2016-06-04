@@ -3,7 +3,7 @@
 
 - name: Set hostname
   hosts: all
-  sudo: True
+  become: True
   gather_facts: False
   tasks:
     - fail: msg="you must pass a hostname_fqdn var into this play"

@@ -9,4 +9,4 @@
     tar -cpzf edx-rbenv_clean.tar.gz .rbenv
     chdir={{ jenkins_home }}
     creates={{ jenkins_home }}/edx-rbenv_clean.tar.gz
-  sudo_user: "{{ jenkins_user }}"
+  become_user: "{{ jenkins_user }}"

@@ -2,7 +2,7 @@
   template: >
     src={{ item }}.env.json.j2
     dest={{ edxapp_app_dir }}/{{ item }}.env.json
-  sudo_user: "{{ edxapp_user }}"
+  become_user: "{{ edxapp_user }}"
   with_items: service_variants_enabled
   tags:
     - install
@@ -13,7 +13,7 @@
   template: >
     src={{ item }}.auth.json.j2
     dest={{ edxapp_app_dir }}/{{ item }}.auth.json
-  sudo_user: "{{ edxapp_user }}"
+  become_user: "{{ edxapp_user }}"
   with_items: service_variants_enabled
   tags:
     - install
@@ -24,7 +24,7 @@
   template: >
     src={{ item }}.env.yaml.j2
     dest={{ EDXAPP_CFG_DIR }}/{{ item }}.env.yaml
-  sudo_user: "{{ edxapp_user }}"
+  become_user: "{{ edxapp_user }}"
   with_items: service_variants_enabled
   tags:
     - install
@@ -35,7 +35,7 @@
   template: >
     src={{ item }}.auth.yaml.j2
     dest={{ EDXAPP_CFG_DIR }}/{{ item }}.auth.yaml
-  sudo_user: "{{ edxapp_user }}"
+  become_user: "{{ edxapp_user }}"
   with_items: service_variants_enabled
   tags:
     - install
@@ -50,7 +50,7 @@
     owner={{ supervisor_user }}
     group={{ supervisor_user }}
   with_items: service_variants_enabled
-  sudo_user: "{{ supervisor_user }}"
+  become_user: "{{ supervisor_user }}"
   tags:
     - install
     - install:configuration
@@ -60,7 +60,7 @@
     src=edxapp.conf.j2 dest={{ supervisor_available_dir }}/edxapp.conf
     owner={{ supervisor_user }}
     group={{ supervisor_user }}
-  sudo_user: "{{ supervisor_user }}"
+  become_user: "{{ supervisor_user }}"
   tags:
     - install
     - install:configuration
@@ -69,7 +69,7 @@
   template: >
     src={{ item }}_gunicorn.py.j2 dest={{ edxapp_app_dir }}/{{ item }}_gunicorn.py
   with_items: service_variants_enabled
-  sudo_user: "{{ edxapp_user }}"
+  become_user: "{{ edxapp_user }}"
   tags:
     - install
     - install:configuration
@@ -81,7 +81,7 @@
     src=workers.conf.j2 dest={{ supervisor_available_dir }}/workers.conf
     owner={{ supervisor_user }}
     group={{ supervisor_user }}
-  sudo_user: "{{ supervisor_user }}"
+  become_user: "{{ supervisor_user }}"
   tags:
     - install
     - install:configuration
@@ -95,7 +95,7 @@
     force=yes
   with_items: service_variants_enabled
   when: celery_worker is not defined and not disable_edx_services
-  sudo_user: "{{ supervisor_user }}"
+  become_user: "{{ supervisor_user }}"
   tags:
     - install
     - install:configuration
@@ -107,7 +107,7 @@
     state=link
     force=yes
   when: celery_worker is not defined and not disable_edx_services
-  sudo_user: "{{ supervisor_user }}"
+  become_user: "{{ supervisor_user }}"
   tags:
     - install
     - install:configuration
@@ -119,7 +119,7 @@
     state=link
     force=yes
   when: celery_worker is defined and not disable_edx_services
-  sudo_user: "{{ supervisor_user }}"
+  become_user: "{{ supervisor_user }}"
   tags:
     - install
     - install:configuration

@@ -51,7 +51,7 @@
     # to system python.
     - name: install python mysqldb module
       pip: name={{item}} state=present
-      sudo: yes
+      become: yes
       with_items:
         - MySQL-python
 

@@ -126,7 +126,7 @@
 - name: get github key[s]
   shell: >
     curl https://github.com/{{ item.name }}.keys
-  sudo_user: "{{ item.name }}"
+  become_user: "{{ item.name }}"
   when: item.github is defined and item.get('state', 'present') == 'present'
   with_items: user_info
   register: github_keys

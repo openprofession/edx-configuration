@@ -202,7 +202,7 @@
 - local_action:
     module: stat
     path: "{{ NGINX_SSL_CERTIFICATE }}"
-  sudo: False
+  become: False
   register: ssl_cert
   tags:
     - install
@@ -211,7 +211,7 @@
 - local_action:
     module: stat
     path: "{{ NGINX_SSL_KEY }}"
-  sudo: False
+  become: False
   register: ssl_key
   tags:
     - install
