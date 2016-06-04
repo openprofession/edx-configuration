@@ -198,6 +198,10 @@ location ~ ^{{ EDXAPP_MEDIA_URL }}/(?P<file>.*) {
     expires {{ EDXAPP_PROFILE_IMAGE_MAX_AGE }}s;
 }
 
+  location /instructor_report/ {
+    alias {{ EDXAPP_GRADE_ROOT_PATH }}/;
+  }
+
   {% include "robots.j2" %}
   {% include "static-files.j2" %}
 
