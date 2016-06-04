@@ -35,7 +35,7 @@
     - install
     - install:system-requirements
 
-- include: deploy.yml tags=deploy
+- include: deploy.yml
 
 
 

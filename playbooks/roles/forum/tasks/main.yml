@@ -60,4 +60,4 @@
     - install
     - install:base
     
-- include: deploy.yml tags=deploy
+- include: deploy.yml
