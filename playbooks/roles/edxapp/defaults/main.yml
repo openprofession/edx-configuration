@@ -2,6 +2,9 @@
 # when the role is included
 ---
 
+EDXAPP_WORKER_SETTINGS: 'aws'
+EDXAPP_MIGRATE_SETTINGS: "{{ EDXAPP_WORKER_SETTINGS }}_migrate"
+
 # These are variables that default to a localhost
 # setup and are meant to be overwritten for
 # different environments.
@@ -78,8 +81,8 @@ EDXAPP_ELASTIC_SEARCH_CONFIG:
     - host: "localhost"
       port: 9200
 
-EDXAPP_LMS_ENV: 'lms.envs.aws'
-EDXAPP_CMS_ENV: 'cms.envs.aws'
+EDXAPP_LMS_ENV: "lms.envs.{{ EDXAPP_WORKER_SETTINGS }}"
+EDXAPP_CMS_ENV: "cms.envs.{{ EDXAPP_WORKER_SETTINGS }}"
 
 EDXAPP_EMAIL_BACKEND: 'django.core.mail.backends.smtp.EmailBackend'
 EDXAPP_EMAIL_HOST: 'localhost'
@@ -608,7 +611,7 @@ edxapp_environment:
   # the settings module for edxapp, DJANGO_SETTINGS_MODULE
   # should be set to {{SERVICE_VARIANT}}.{{EDXAPP_SETTINGS}}
   # where SERVICE_VARIANT is lms or cms
-  EDX_PLATFORM_SETTINGS: aws
+  EDX_PLATFORM_SETTINGS: "{{ EDXAPP_WORKER_SETTINGS }}"
   # Current set to the app dir for json config, this should
   # be updated to /edx/etc/edxapp when the switch to
   # yaml based configs is complete
@@ -1039,4 +1042,4 @@ edxapp_lms_variant: lms
 edxapp_cms_variant: cms
 
 # Worker Settings
-worker_django_settings_module: 'aws'
+worker_django_settings_module: "{{ EDXAPP_WORKER_SETTINGS }}"
