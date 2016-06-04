@@ -807,6 +807,9 @@ generic_env_config:  &edxapp_generic_env
     configuration:
       <<: *default_generic_cache
       KEY_PREFIX: "{{ ansible_hostname|default('configuration') }}"
+    ora2_cache:
+      <<: *default_generic_cache
+      KEY_PREFIX:  'ora2'
     celery:
       <<: *default_generic_cache
       KEY_PREFIX:  'celery'
