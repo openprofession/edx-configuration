@@ -26,7 +26,18 @@
   tags:
     - install
     - install:base
-    
+
+- name: create npoed-specific edxapp dirs
+  file: >
+    path="{{ item }}"
+    state=directory
+    owner="{{ common_web_user }}"
+    group="{{ common_web_group }}"
+  with_items:
+    - "{{ edxapp_ora2_dir }}"
+    - "{{ edxapp_s3_dir }}"
+    - "{{ edxapp_grades_dir }}"
+
 # var should have more permissive permissions than the rest
 - name: create edxapp var dir
   file: >
