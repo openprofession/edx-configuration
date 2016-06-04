@@ -64,7 +64,7 @@
     state=present
     virtualenv={{ devpi_venv_dir }}
   become_user: "{{ devpi_user }}"
-  with_items: devpi_pip_pkgs
+  with_items: "{{ devpi_pip_pkgs }}"
   notify: restart devpi
 
 - name: writing supervisor script

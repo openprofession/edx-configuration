@@ -121,7 +121,7 @@
     state: present
     update_cache: true
     cache_valid_time: 3600
-  with_items: edx_service_packages.debian
+  with_items: "{{ edx_service_packages.debian }}"
   when: ansible_distribution in common_debian_variants
   tags:
     - install
@@ -129,7 +129,7 @@
 
 - name: install a bunch of system packages on which edx_service relies
   yum: pkg={{ item }} state=present
-  with_items: edx_service_name.redhat
+  with_items: "{{ edx_service_name.redhat }}"
   when: ansible_distribution in common_redhat_variants
   tags:
     - install
@@ -146,7 +146,7 @@
 - name: validate git protocol
   fail: msg='REPOS.PROTOCOL must be "https" or "ssh"'
   when: (item.PROTOCOL != "https") and (item.PROTOCOL != "ssh") and edx_service_repos is defined
-  with_items: edx_service_repos
+  with_items: "{{ edx_service_repos }}"
   tags:
     - install
     - install:code
@@ -157,7 +157,7 @@
     content="{{ item.SSH_KEY }}" owner={{ edx_service_user }}
     group={{ edx_service_user }} mode=0600
   when: item.PROTOCOL == "ssh" and edx_service_repos is defined
-  with_items: edx_service_repos
+  with_items: "{{ edx_service_repos }}"
   tags:
     - install
     - install:code
@@ -170,7 +170,7 @@
   become_user: "{{ edx_service_user }}"
   register: code_checkout
   when: item.PROTOCOL == "ssh" and edx_service_repos is defined
-  with_items: edx_service_repos
+  with_items: "{{ edx_service_repos }}"
   tags:
     - install
     - install:code
@@ -182,7 +182,7 @@
   become_user: "{{ edx_service_user }}"
   register: code_checkout
   when: item.PROTOCOL == "https" and edx_service_repos is defined
-  with_items: edx_service_repos
+  with_items: "{{ edx_service_repos }}"
   tags:
     - install
     - install:code
@@ -201,8 +201,8 @@
         Value: "{{ item.0.DOMAIN }}/{{ item.0.PATH }}/{{ item.0.REPO }} {{ item.1.after |truncate(7,True,'') }}"
   when: item.1.after is defined and COMMON_TAG_EC2_INSTANCE and edx_service_repos is defined
   with_together: 
-    - edx_service_repos
-    - code_checkout.results
+    - "{{ edx_service_repos }}"
+    - "{{ code_checkout.results }}"
   tags:
     - to-remove
 
