@@ -82,6 +82,7 @@ xqueue_auth_config:
       ATOMIC_REQUESTS: True
   RABBITMQ_USER: "{{ XQUEUE_RABBITMQ_USER }}"
   RABBITMQ_PASS: "{{ XQUEUE_RABBITMQ_PASS }}"
+  RAVEN_DSN: "{{ XQUEUE_RAVEN_DSN |default('') }}"
 
 xqueue_source_repo: "https://github.com/edx/xqueue.git"
 xqueue_version: 'master'

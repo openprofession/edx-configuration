@@ -36,6 +36,17 @@
     - install
     - install:base
 
+- name: create npoed-specific edxapp dirs
+  file: >
+    path="{{ item }}"
+    state=directory
+    owner="{{ common_web_user }}"
+    group="{{ common_web_group }}"
+  with_items:
+    - "{{ edxapp_ora2_dir }}"
+    - "{{ edxapp_s3_dir }}"
+    - "{{ edxapp_grades_dir }}"
+
 # This is a symlink that has to exist because
 # we currently can't override the DATA_DIR var
 # in edx-platform. TODO: This can be removed once
