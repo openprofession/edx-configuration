@@ -1,0 +1,11 @@
+---
+# Define the following variables:
+
+#cms_sso_key
+#cms_sso_secret
+#lms_sso_key
+#lms_sso_secret
+
+#edxapp_admin_user
+#edxapp_admin_pass
+#edxapp_admin_email

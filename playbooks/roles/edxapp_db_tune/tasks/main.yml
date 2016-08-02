@@ -1,0 +1,23 @@
+---
+- name: install mysql-client
+  apt: >
+    name=mysql-client
+    state=present
+
+- name: connect edxapp to SSO
+  command: >
+    mysql -u{{ EDXAPP_MYSQL_USER }} -p{{ EDXAPP_MYSQL_PASSWORD }} -h{{ EDXAPP_MYSQL_HOST }} {{ EDXAPP_MYSQL_DB_NAME }}
+    -e "INSERT IGNORE INTO third_party_auth_oauth2providerconfig (id,change_date,enabled,icon_class,name,secondary,skip_registration_form,skip_email_verification,backend_name,`key`,secret,other_settings,changed_by_id) VALUES ({{ item.id }},now(),1,'fa-sign-in','{{ item.name }}',0,0,0,'{{ item.backend_name }}','{{ item.key }}','{{ item.secret }}','{ \"use_for_cms\": {{ item.use_for_cms }} }',1)"
+  with_items:
+    - { id: 1, name: 'CMS', backend_name: 'sso_npoed_cms-oauth2', key: "{{ cms_sso_key }}", secret: "{{ cms_sso_secret }}", use_for_cms: 'true' }
+    - { id: 2, name: 'LMS', backend_name: 'sso_npoed-oauth2',     key: "{{ lms_sso_key }}", secret: "{{ lms_sso_secret }}", use_for_cms: 'false' }
+
+- name: converge the edxadm user
+  command: >
+    mysql -u{{ EDXAPP_MYSQL_USER }} -p{{ EDXAPP_MYSQL_PASSWORD }} -h{{ EDXAPP_MYSQL_HOST }} {{ EDXAPP_MYSQL_DB_NAME }}
+    -e "INSERT INTO auth_user (id,password,is_superuser,username,email,is_staff,is_active,date_joined) VALUES (1,'{{ edxapp_admin_pass }}',1,'{{ edxapp_admin_user }}','{{ edxapp_admin_email }}',1,1,now()) ON DUPLICATE KEY UPDATE password='{{ edxapp_admin_pass }}',is_superuser=1,username='{{ edxapp_admin_user }}',email='{{ edxapp_admin_email }}',is_staff=1,is_active=1"
+
+- name: converge a profile for the edxadm user
+  command: >
+    mysql -u{{ EDXAPP_MYSQL_USER }} -p{{ EDXAPP_MYSQL_PASSWORD }} -h{{ EDXAPP_MYSQL_HOST }} {{ EDXAPP_MYSQL_DB_NAME }}
+    -e "INSERT IGNORE INTO auth_userprofile (courseware,user_id) VALUES ('course.xml',1)"
