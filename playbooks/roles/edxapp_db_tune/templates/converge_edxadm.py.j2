@@ -1,0 +1,9 @@
+from django.contrib.auth.models import User
+u = User.objects.get_or_create(id=1)[0]
+u.username     = u'{{ edxapp_admin_user }}'
+u.password     = u'{{ edxapp_admin_pass }}'
+u.email        = u'{{ edxapp_admin_email }}'
+u.is_active    = True
+u.is_staff     = True
+u.is_superuser = True
+u.save
