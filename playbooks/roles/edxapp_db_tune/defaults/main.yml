@@ -9,3 +9,8 @@
 #edxapp_admin_user
 #edxapp_admin_pass
 #edxapp_admin_email
+
+edxapp_db_tune__snippets:
+  - connect_to_sso
+  - converge_edxadm
+  - create_profile_for_edxadm

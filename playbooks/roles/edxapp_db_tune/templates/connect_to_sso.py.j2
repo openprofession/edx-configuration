@@ -1,0 +1,17 @@
+from third_party_auth.models import OAuth2ProviderConfig
+
+cms = OAuth2ProviderConfig.current('sso_npoed_cms-oauth2')
+cms.name           = u'CMS'
+cms.key            = u'{{ cms_sso_key }}'
+cms.secret         = u'{{ cms_sso_secret }}'
+cms.other_settings = u'{ "use_for_cms": true }'
+cms.enabled        = True
+cms.save_base()
+
+lms = OAuth2ProviderConfig.current('sso_npoed-oauth2')
+lms.name           = u'LMS'
+lms.key            = u'{{ lms_sso_key }}'
+lms.secret         = u'{{ lms_sso_secret }}'
+lms.other_settings = u'{ "use_for_cms": false }'
+lms.enabled        = True
+lms.save_base()
