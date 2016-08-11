@@ -1021,6 +1021,8 @@ private_requirements_file:   "{{ edxapp_code_dir }}/requirements/edx/edx-private
 ciot_extensions_requirements_file: "{{ edxapp_code_dir }}/requirements/edx/ciot/extensions.txt"
 ciot_multiproctoring_requirements_file: "{{ edxapp_code_dir }}/requirements/edx/ciot/multiproctoring.txt"
 ciot_raven_requirements_file: "{{ edxapp_code_dir }}/requirements/edx/ciot/raven.txt"
+ciot_xblocks_ifmo_requirements_file: "{{ edxapp_code_dir }}/requirements/edx/ciot/ifmo.txt"
+ciot_xblocks_urfu_requirements_file: "{{ edxapp_code_dir }}/requirements/edx/ciot/urfu.txt"
 
 
 sandbox_base_requirements:  "{{ edxapp_code_dir }}/requirements/edx-sandbox/base.txt"
@@ -1059,6 +1061,8 @@ edxapp_requirements_with_github_urls:
   - "{{ sandbox_base_requirements }}"
   - "{{ ciot_extensions_requirements_file }}"
   - "{{ ciot_multiproctoring_requirements_file }}"
+  - "{{ ciot_xblocks_ifmo_requirements_file }}"
+  - "{{ ciot_xblocks_urfu_requirements_file }}"
 
 edxapp_chrislea_ppa: "ppa:chris-lea/node.js"
 
