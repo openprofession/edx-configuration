@@ -1004,7 +1004,6 @@ lms_env_config:
   API_ACCESS_FROM_EMAIL: "{{ EDXAPP_API_ACCESS_FROM_EMAIL }}"
   API_DOCUMENTATION_URL: "{{ EDXAPP_API_DOCUMENTATION_URL }}"
   AUTH_DOCUMENTATION_URL: "{{ EDXAPP_AUTH_DOCUMENTATION_URL }}"
-  RAVEN_DSN: "{{ EDXAPP_LMS_RAVEN_DSN |default('') }}"
   NPOED_MAKO_TEMPLATES: "{{ EDXAPP_NPOED_MAKO_TEMPLATES_LMS |default([]) }}"
   PROCTORING_SETTINGS:
     LINK_URLS: "{{ EDXAPP_PROCTORING_LINKS_GENERIC |default({}) }}"
@@ -1040,7 +1039,6 @@ cms_env_config:
   <<: *edxapp_generic_env
   SITE_NAME:  "{{ EDXAPP_CMS_SITE_NAME }}"
   GIT_REPO_EXPORT_DIR: "{{ EDXAPP_GIT_REPO_EXPORT_DIR }}"
-  RAVEN_DSN: "{{ EDXAPP_CMS_RAVEN_DSN |default('') }}"
   NPOED_MAKO_TEMPLATES: "{{ EDXAPP_NPOED_MAKO_TEMPLATES_CMS |default([]) }}"
 
 # install dir for the edx-platform repo
@@ -1093,6 +1091,11 @@ post_requirements_file:   "{{ edxapp_code_dir }}/requirements/edx/post.txt"
 paver_requirements_file:   "{{ edxapp_code_dir }}/requirements/edx/paver.txt"
 private_requirements_file:   "{{ edxapp_code_dir }}/requirements/edx/edx-private.txt"
 
+ciot_extensions_requirements_file: "{{ edxapp_code_dir }}/requirements/edx/ciot/extensions.txt"
+ciot_multiproctoring_requirements_file: "{{ edxapp_code_dir }}/requirements/edx/ciot/multiproctoring.txt"
+ciot_raven_requirements_file: "{{ edxapp_code_dir }}/requirements/edx/ciot/raven.txt"
+
+
 sandbox_base_requirements:  "{{ edxapp_code_dir }}/requirements/edx-sandbox/base.txt"
 sandbox_local_requirements: "{{ edxapp_code_dir }}/requirements/edx-sandbox/local.txt"
 sandbox_post_requirements:  "{{ edxapp_code_dir }}/requirements/edx-sandbox/post.txt"
@@ -1110,6 +1113,8 @@ edxapp_requirements_files:
   - "{{ base_requirements_file }}"
   - "{{ post_requirements_file }}"
   - "{{ paver_requirements_file }}"
+  - "{{ ciot_extensions_requirements_file }}"
+  - "{{ ciot_multiproctoring_requirements_file }}"
 
 # All edxapp requirements files potentially containing Github URLs.  When using a custom
 # Github mirror, occurrences of "github.com" are replaced by the custom mirror in these
@@ -1125,6 +1130,8 @@ edxapp_requirements_with_github_urls:
   - "{{ sandbox_post_requirements }}"
   - "{{ sandbox_local_requirements }}"
   - "{{ sandbox_base_requirements }}"
+  - "{{ ciot_extensions_requirements_file }}"
+  - "{{ ciot_multiproctoring_requirements_file }}"
 
 edxapp_chrislea_ppa: "ppa:chris-lea/node.js"
 
