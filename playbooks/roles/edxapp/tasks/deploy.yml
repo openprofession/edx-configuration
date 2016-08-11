@@ -6,6 +6,11 @@
     edxapp_requirements_files: "{{ edxapp_requirements_files + [ciot_raven_requirements_file] }}"
   when: EDXAPP_LMS_RAVEN_DSN is defined and EDXAPP_CMS_RAVEN_DSN is defined
 
+- name: install ifmo/urfu xblocks if needed
+  set_fact: >
+    edxapp_requirements_files: "{{ edxapp_requirements_files + [ciot_xblocks_ifmo_requirements_file, ciot_xblocks_urfu_requirements_file] }}"
+  when: EDXAPP_ADD_EXTRA_XBLOCKS is defined and EDXAPP_ADD_EXTRA_XBLOCKS == true
+
 - name: create edxapp configuration dir
   file:
     path: "{{ EDXAPP_CFG_DIR }}" 
