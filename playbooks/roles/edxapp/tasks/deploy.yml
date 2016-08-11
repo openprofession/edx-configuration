@@ -1,3 +1,11 @@
+---
+- name: enable raven if needed
+  set_fact: >
+    lms_env_config: "{{ lms_env_config |combine({ 'RAVEN_DSN': EDXAPP_LMS_RAVEN_DSN }) }}"
+    cms_env_config: "{{ cms_env_config |combine({ 'RAVEN_DSN': EDXAPP_CMS_RAVEN_DSN }) }}"
+    edxapp_requirements_files: "{{ edxapp_requirements_files + [ciot_raven_requirements_file] }}"
+  when: EDXAPP_LMS_RAVEN_DSN is defined and EDXAPP_CMS_RAVEN_DSN is defined
+
 - name: setup the edxapp env
   template: >
     src=edxapp_env.j2 dest={{ edxapp_app_dir }}/edxapp_env
