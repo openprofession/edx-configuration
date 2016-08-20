@@ -1,9 +1,7 @@
 # {{ ansible_managed }}
 
-{% for name,value in forum_environment.items() -%}
-{%- if value -%}
+{% for name,value in forum_environment.items() %}
 export {{ name }}="{{ value }}"
-{% endif %}                 
-{%- endfor %}
+{% endfor %}
 
 eval "$(rbenv init -)"
