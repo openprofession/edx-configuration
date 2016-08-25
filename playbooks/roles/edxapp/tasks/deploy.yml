@@ -182,6 +182,22 @@
     - install
     - install:app-requirements
 
+
+
+# FIXME: a nasty stuff goes here; I going to rewrite it in more generic way later...
+- name: install opencv python bindings
+  apt: >
+    name=python-opencv
+    state=present
+  when: EDXAPP_ADD_EXTRA_XBLOCKS is defined and EDXAPP_ADD_EXTRA_XBLOCKS == true
+
+- name: copy opencv python bindings
+  command: /bin/cp -a /usr/lib/pyshared/python2.7/cv2.so {{ edxapp_venv_dir }}/lib/python2.7
+  become_user: "{{ edxapp_user }}"
+  when: EDXAPP_ADD_EXTRA_XBLOCKS is defined and EDXAPP_ADD_EXTRA_XBLOCKS == true
+
+
+
 - name: Stat each Python requirements file to ensure it exists
   stat:
     path: "{{ item }}"
