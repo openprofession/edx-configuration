@@ -256,6 +256,18 @@
     - install
     - install:app-requirements
 
+# another piece of poop (Raven isn't equipped with WoSign's CA)
+- block:
+    - name: fix raven's SSL certificate check
+      replace: >
+        dest={{ edxapp_venv_dir }}/lib/python2.7/site-packages/raven/utils/http.py
+        regexp='ssl\.CERT_REQUIRED'
+        replace='ssl.CERT_NONE'
+      become_user: "{{ edxapp_user }}"
+      when: NPOED_THIS_IS_TEST and EDXAPP_LMS_RAVEN_DSN is defined and EDXAPP_CMS_RAVEN_DSN is defined
+  rescue:
+    - debug: msg="can't fix raven"
+
 # If using CAS and you have a function for mapping attributes, install
 # the module here.  The next few tasks set up the python code sandbox
 - name: install CAS attribute module
