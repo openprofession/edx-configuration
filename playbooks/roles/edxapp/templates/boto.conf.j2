@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+[s3]
+{% if EDXAPP_S3_HOST is defined %}
+host = EDXAPP_S3_HOST
+{% endif %}
+{% if EDXAPP_S3_CALLING_FORMAT is defined %}
+calling_format = EDXAPP_S3_CALLING_FORMAT
+{% endif %}
