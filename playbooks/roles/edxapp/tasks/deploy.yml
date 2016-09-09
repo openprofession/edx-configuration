@@ -264,7 +264,7 @@
         regexp='ssl\.CERT_REQUIRED'
         replace='ssl.CERT_NONE'
       become_user: "{{ edxapp_user }}"
-      when: NPOED_THIS_IS_TEST and EDXAPP_LMS_RAVEN_DSN is defined and EDXAPP_CMS_RAVEN_DSN is defined
+      when: EDXAPP_LMS_RAVEN_DSN is defined and EDXAPP_CMS_RAVEN_DSN is defined
   rescue:
     - debug: msg="can't fix raven"
 
