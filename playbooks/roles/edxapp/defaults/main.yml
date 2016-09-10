@@ -1141,6 +1141,7 @@ edxapp_debian_pkgs:
   # for compiling the virtualenv
   # (only needed if wheel files aren't available)
   - s3cmd
+  - python-magic
   - pkg-config
   # for scipy, do not install
   # libopenblas-base, it will cause
