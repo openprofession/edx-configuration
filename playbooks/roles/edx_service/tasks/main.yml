@@ -120,6 +120,58 @@
     - install
     - install:system-requirements
 
+- name: set git fetch.prune to ignore deleted remote refs
+  shell: git config --global fetch.prune true
+  become_user: "{{ edx_service_user }}"
+  when: edx_service_repos is defined
+  tags:
+    - install
+    - install:code
+
+- name: validate git protocol
+  fail: msg='REPOS.PROTOCOL must be "https" or "ssh"'
+  when: (item.PROTOCOL != "https") and (item.PROTOCOL != "ssh") and edx_service_repos is defined
+  with_items: edx_service_repos
+  tags:
+    - install
+    - install:code
+
+- name: install read-only ssh key
+  copy: >
+    dest="{{ edx_service_home }}/.ssh/{{ item.REPO }}"
+    content="{{ item.SSH_KEY }}" owner={{ edx_service_user }}
+    group={{ edx_service_user }} mode=0600
+  when: item.PROTOCOL == "ssh" and edx_service_repos is defined
+  with_items: edx_service_repos
+  tags:
+    - install
+    - install:code
+
+- name: checkout code over ssh
+  git_2_0_1: >
+    repo=git@{{ item.DOMAIN }}:{{ item.PATH }}/{{ item.REPO }}
+    dest={{ item.DESTINATION }}  version={{ item.VERSION }}
+    accept_hostkey=yes key_file={{ edx_service_home }}/.ssh/{{ item.REPO }}
+  become_user: "{{ edx_service_user }}"
+  register: code_checkout
+  when: item.PROTOCOL == "ssh" and edx_service_repos is defined
+  with_items: edx_service_repos
+  tags:
+    - install
+    - install:code
+
+- name: checkout code over https
+  git_2_0_1: >
+    repo=https://{{ item.DOMAIN }}/{{ item.PATH }}/{{ item.REPO }}
+    dest={{ item.DESTINATION }}  version={{ item.VERSION }}
+  become_user: "{{ edx_service_user }}"
+  register: code_checkout
+  when: item.PROTOCOL == "https" and edx_service_repos is defined
+  with_items: edx_service_repos
+  tags:
+    - install
+    - install:code
+
 - name: get instance information
   action: ec2_facts
   tags:

@@ -45,10 +45,10 @@
     - install:configuration
 
 # Do A Checkout
-- name: "Git checkout xqueue repo into {{ xqueue_code_dir }}"
+- name: git checkout xqueue repo into xqueue_code_dir
   git_2_0_1:
-    repo: "{{ xqueue_source_repo }}"
     dest: "{{ xqueue_code_dir }}"
+    repo: "{{ xqueue_source_repo }}"
     version: "{{ xqueue_version }}"
     accept_hostkey: yes
   become_user: "{{ xqueue_user }}"

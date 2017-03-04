@@ -49,7 +49,10 @@ if [ -n "$OPENEDX_RELEASE" ]; then
     -e forum_version=$OPENEDX_RELEASE \
     -e xqueue_version=$OPENEDX_RELEASE \
     -e configuration_version=$OPENEDX_RELEASE \
-  $EXTRA_VARS"
+    -e NOTIFIER_VERSION=$OPENEDX_RELEASE \
+    -e INSIGHTS_VERSION=$OPENEDX_RELEASE \
+    -e ANALYTICS_API_VERSION=$OPENEDX_RELEASE \
+  "
   CONFIG_VER=$OPENEDX_RELEASE
 else
   CONFIG_VER="master"

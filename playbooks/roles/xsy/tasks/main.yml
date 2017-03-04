@@ -46,7 +46,7 @@
     mode: "0644"
   notify: restart xsy
 
-- name: Checkout the code
+- name: checkout the code
   git_2_0_1:
     dest: "{{ xsy_code_dir }}"
     repo: "{{ xsy_source_repo }}"

@@ -1,22 +1,23 @@
----
-- name: Setup the env and configure the boto profiles for alton
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ alton_app_dir }}/{{ item.dest }}"
-    owner: "{{ alton_user }}"
-    group: "{{ common_web_user }}"
-    mode: "0640"
-  with_items:
-    - { src: 'alton_env.j2', dest: 'alton_env' }
-    - { src: 'boto.j2', dest: '.boto' }
+- name: setup the alton env
+  template: >
+    src="alton_env.j2" dest="{{ alton_app_dir }}/alton_env"
+    owner="{{ alton_user }}" group="{{ common_web_user }}"
+    mode=0644
   notify: restart alton
 
-- name: Checkout the code
-  git_2_0_1:
-    dest: "{{ alton_code_dir }}"
-    repo: "{{ alton_source_repo }}"
-    version: "{{ alton_version }}"
-    accept_hostkey: yes
+- name: configure the boto profiles for alton
+  template: >
+    src="boto.j2"
+    dest="{{ alton_app_dir }}/.boto"
+    owner="{{ alton_user }}"
+    group="{{ common_web_user }}"
+    mode="0640"
+  notify: restart alton
+
+- name: checkout the code
+  git_2_0_1: >
+    dest="{{ alton_code_dir }}" repo="{{ alton_source_repo }}"
+    version="{{ alton_version }}" accept_hostkey=yes
   become_user: "{{ alton_user }}"
   register: alton_checkout
   notify: restart alton

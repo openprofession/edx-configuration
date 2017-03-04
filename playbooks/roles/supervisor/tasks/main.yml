@@ -91,7 +91,7 @@
     - install
     - install:base
 
-- name: Install supervisor in its venv
+- name: install supervisor in its venv
   pip:
     name: supervisor
     version: "{{ supervisor_version }}"
