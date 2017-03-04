@@ -1017,6 +1017,7 @@ lms_env_config:
   NPOED_MAKO_TEMPLATES: "{{ EDXAPP_NPOED_MAKO_TEMPLATES_LMS |default([]) }}"
   PROCTORING_SETTINGS: "{{ EDXAPP_PROCTORING_SETTINGS |default({}) }}"
   USERS_WITH_SPECIAL_PERMS_IDS: "{{ EDXAPP_USERS_WITH_SPECIAL_PERMS_IDS |default('') }}"
+  RAVEN_DSN: "{{ EDXAPP_LMS_RAVEN_DSN }}"
 
 cms_auth_config:
   <<: *edxapp_generic_auth
@@ -1047,6 +1048,7 @@ cms_env_config:
   SITE_NAME:  "{{ EDXAPP_CMS_SITE_NAME }}"
   GIT_REPO_EXPORT_DIR: "{{ EDXAPP_GIT_REPO_EXPORT_DIR }}"
   NPOED_MAKO_TEMPLATES: "{{ EDXAPP_NPOED_MAKO_TEMPLATES_CMS |default([]) }}"
+  RAVEN_DSN: "{{ EDXAPP_CMS_RAVEN_DSN }}"
 
 # install dir for the edx-platform repo
 edxapp_code_dir: "{{ edxapp_app_dir }}/edx-platform"
