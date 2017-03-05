@@ -62,6 +62,11 @@
   file: path={{ certs_git_identity }} state=absent
   when: CERTS_GIT_IDENTITY != "none"
 
+- name: install libjpeg-dev
+  apt:
+    name: libjpeg-dev
+    state: present
+
 - name : install python requirements
   pip: >
     requirements="{{ certs_requirements_file }}" virtualenv="{{ certs_venv_dir }}" state=present
