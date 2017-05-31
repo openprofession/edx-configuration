@@ -24,11 +24,6 @@ edxlocal_database_users:
       pass: "{{ ECOMMERCE_DATABASES.default.PASSWORD | default(None) }}"
     }
   - {
-      db: "{{ INSIGHTS_DATABASE_NAME | default(None) }}",
-      user: "{{ (INSIGHTS_DATABASES.default|default(None)).USER | default(None) }}",
-      pass: "{{ (INSIGHTS_DATABASES.default|default(None)).PASSWORD | default(None) }}"
-    }
-  - {
       db: "{{ ORA_MYSQL_DB_NAME | default(None) }}",
       user: "{{ ORA_MYSQL_USER | default(None) }}",
       pass: "{{ ORA_MYSQL_PASSWORD | default(None) }}"
